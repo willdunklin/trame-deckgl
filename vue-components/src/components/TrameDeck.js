@@ -1,4 +1,4 @@
-import { createDeck } from '@deck.gl/jupyter-widget';
+import { createDeck, updateDeck } from '@deck.gl/jupyter-widget';
 
 export default {
   name: 'TrameDeck',
@@ -19,9 +19,17 @@ export default {
   },
   watch: {
     async jsonInput() {
+      if (this.viz) {
+        updateDeck(this.jsonInput, this.viz);
+        return;
+      }
       await this.mountVis();
     },
     async opt() {
+      if (this.viz) {
+        updateDeck(this.jsonInput, this.viz);
+        return;
+      }
       await this.mountVis();
     },
   },
